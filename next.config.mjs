@@ -50,6 +50,16 @@ const nextConfig = {
     COINBASE_COMMERCE_API_KEY: process.env.COINBASE_COMMERCE_API_KEY,
     COINBASE_COMMERCE_WEBHOOK_SECRET: process.env.COINBASE_COMMERCE_WEBHOOK_SECRET,
   },
+
+  // Add webpack config to ensure path aliases work
+  webpack: (config, { isServer }) => {
+    // Add support for path aliases
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': process.cwd() + '/src'
+    };
+    return config;
+  },
 };
 
 export default nextConfig; 
