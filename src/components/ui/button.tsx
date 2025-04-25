@@ -8,25 +8,26 @@ import { cn } from "@/lib/utils";
  * Provides consistent styling across different button styles and sizes
  */
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        default: "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-md hover:-translate-y-0.5",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90 hover:shadow-md hover:-translate-y-0.5",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "border border-input bg-background hover:bg-accent hover:text-accent-foreground hover:shadow-md hover:-translate-y-0.5",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80 hover:shadow-md hover:-translate-y-0.5",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        success: "bg-green-600 text-white hover:bg-green-700",
-        info: "bg-blue-600 text-white hover:bg-blue-700",
-        warning: "bg-amber-500 text-white hover:bg-amber-600",
-        subtle: "bg-muted text-muted-foreground hover:bg-muted/80",
-        payment: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md",
-        crypto: "bg-[#0052FF] text-white hover:bg-[#0052FF]/90", // Coinbase color
+        success: "bg-green-600 text-white hover:bg-green-700 hover:shadow-md hover:-translate-y-0.5",
+        info: "bg-blue-600 text-white hover:bg-blue-700 hover:shadow-md hover:-translate-y-0.5",
+        warning: "bg-amber-500 text-white hover:bg-amber-600 hover:shadow-md hover:-translate-y-0.5",
+        subtle: "bg-muted text-muted-foreground hover:bg-muted/80 hover:shadow-sm hover:-translate-y-0.5",
+        payment: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg hover:-translate-y-1 hover:shadow-primary/20",
+        crypto: "bg-[#0052FF] text-white hover:bg-[#0052FF]/90 hover:shadow-lg hover:-translate-y-1 hover:shadow-[#0052FF]/20", // Coinbase color
+        glow: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg hover:-translate-y-1 hover:shadow-primary/40 relative overflow-hidden",
       },
       size: {
         default: "h-10 px-4 py-2",
@@ -43,11 +44,19 @@ const buttonVariants = cva(
         full: "w-full",
         auto: "w-auto",
       },
+      glow: {
+        none: "",
+        subtle: "hover:shadow-md hover:shadow-primary/20",
+        medium: "hover:shadow-lg hover:shadow-primary/30",
+        strong: "hover:shadow-xl hover:shadow-primary/40",
+        pulse: "animate-pulse-slow hover:shadow-xl hover:shadow-primary/40", 
+      },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
       width: "default",
+      glow: "none",
     },
   }
 );
@@ -89,6 +98,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     variant, 
     size, 
     width,
+    glow,
     asChild = false, 
     startIcon, 
     endIcon, 
@@ -102,7 +112,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, width, className }))}
+        className={cn(buttonVariants({ variant, size, width, glow, className }))}
         ref={ref}
         disabled={isDisabled}
         {...props}
@@ -133,6 +143,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {startIcon && !loading && <span className="mr-2">{startIcon}</span>}
         {children}
         {endIcon && <span className="ml-2">{endIcon}</span>}
+        
+        {variant === 'glow' && (
+          <span className="absolute -inset-full h-full w-1/3 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 animate-shimmer" />
+        )}
       </Comp>
     );
   }

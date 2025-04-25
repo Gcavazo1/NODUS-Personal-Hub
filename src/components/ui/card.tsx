@@ -16,7 +16,8 @@ const cardVariants = cva(
         outline: "shadow-none",
         filled: "bg-muted border-0",
         payment: "border-primary/20",
-        interactive: "hover:shadow-md transition-shadow duration-200",
+        interactive: "hover:shadow-md transition-shadow duration-200 hover:-translate-y-1 transform transition-transform",
+        glow: "hover:shadow-lg transition-all duration-300 relative overflow-hidden border-primary/10",
       },
       padding: {
         default: "",
@@ -24,20 +25,45 @@ const cardVariants = cva(
         sm: "[&>*:first-child]:pt-4 [&>*:first-child]:px-4 [&>*:last-child]:pb-4 [&>*:last-child]:px-4",
         lg: "[&>*:first-child]:pt-8 [&>*:first-child]:px-8 [&>*:last-child]:pb-8 [&>*:last-child]:px-8",
       },
+      hover: {
+        none: "",
+        lift: "hover-lift",
+        glow: "glow-on-hover",
+        scale: "hover:scale-[1.02] transition-transform duration-300",
+      },
     },
     defaultVariants: {
       variant: "default",
       padding: "default",
+      hover: "none",
     },
   }
 )
+
+/**
+ * Animation mapping for easier reference
+ */
+const animationClasses = {
+  none: "",
+  fadeIn: "animate-fade-in",
+  slideUp: "animate-slide-up", 
+  slideDown: "animate-slide-down",
+  slideLeft: "animate-slide-left",
+  slideRight: "animate-slide-right",
+  zoomIn: "animate-zoom-in",
+  float: "animate-float",
+};
+
+type AnimationType = keyof typeof animationClasses;
 
 /**
  * Card component props
  */
 export interface CardProps 
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof cardVariants> {}
+    VariantProps<typeof cardVariants> {
+  animation?: AnimationType;
+}
 
 /**
  * Card Component
@@ -45,13 +71,27 @@ export interface CardProps
  * A versatile card component for displaying content in a contained box.
  */
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant, padding, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(cardVariants({ variant, padding }), className)}
-      {...props}
-    />
-  )
+  ({ className, variant, padding, hover, animation = "none", ...props }, ref) => {
+    // Get the animation class directly from our mapping
+    const animationClass = animationClasses[animation];
+    
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          cardVariants({ variant, padding, hover }), 
+          animationClass,
+          className
+        )}
+        {...props}
+      >
+        {props.children}
+        {variant === 'glow' && (
+          <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 via-transparent to-primary/5 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+        )}
+      </div>
+    );
+  }
 )
 Card.displayName = "Card"
 

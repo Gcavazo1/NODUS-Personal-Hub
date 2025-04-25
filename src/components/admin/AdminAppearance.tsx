@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image'; // Import next/image
 // import { db } from '@/lib/firebase'; // Unused
 // import { doc, getDoc, setDoc } from 'firebase/firestore'; // Unused
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'; // Removed CardContent, CardFooter
 import { Button } from '@/components/ui/button';
-import { Palette, Check, Loader2, SunIcon, MoonIcon, ImageIcon, RotateCcw } from 'lucide-react';
+import { Check, Loader2, SunIcon, MoonIcon, ImageIcon, RotateCcw } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useSiteSettings } from '@/context/SiteSettingsContext';
@@ -436,42 +437,51 @@ interface ThemeCardProps {
 }
 
 const ThemeCard = ({ theme, isSelected, onSelect }: ThemeCardProps) => {
-  const [imageError, setImageError] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
+  // Construct image path based on theme id
+  const lightImgSrc = `/images/themes/${theme.id}-light.png`;
+  const darkImgSrc = `/images/themes/${theme.id}-dark.png`;
 
   return (
     <Card 
       className={cn(
-        "overflow-hidden cursor-pointer transition-all border-2",
-        isSelected ? "border-primary" : "border-transparent hover:border-primary/50"
+        "overflow-hidden cursor-pointer transition-all duration-300",
+        isSelected ? 'ring-2 ring-primary ring-offset-2' : 'hover:shadow-md'
       )}
       onClick={onSelect}
     >
-      <div className="aspect-video w-full bg-muted relative">
-        {!imageError ? (
-          <img 
-            src={`/images/${theme.id}-light-background.jpg`} 
-            alt={`${theme.name} theme`}
-            className="w-full h-full object-cover"
-            onError={() => setImageError(true)}
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-muted">
-            <ImageIcon className="h-12 w-12 text-muted-foreground opacity-50" />
-          </div>
+      <div className="relative h-48 bg-muted flex items-center justify-center">
+        {!imgLoaded && (
+          <ImageIcon className="h-10 w-10 text-muted-foreground animate-pulse" />
         )}
+        {/* Light theme image (visible in light mode) */}
+        <Image
+          src={lightImgSrc}
+          alt={`${theme.name} Light Theme Preview`}
+          fill // Use fill to cover the container
+          className={cn("object-cover block dark:hidden transition-opacity duration-500", imgLoaded ? "opacity-100" : "opacity-0")}
+          onLoad={() => setImgLoaded(true)}
+          onError={(e) => { console.error(`Failed to load ${lightImgSrc}`); setImgLoaded(true); e.currentTarget.style.display = 'none'; }} // Hide on error
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
+        {/* Dark theme image (visible in dark mode) */}
+        <Image
+          src={darkImgSrc}
+          alt={`${theme.name} Dark Theme Preview`}
+          fill
+          className={cn("object-cover hidden dark:block transition-opacity duration-500", imgLoaded ? "opacity-100" : "opacity-0")}
+          onLoad={() => setImgLoaded(true)} // Re-check load state for dark image
+          onError={(e) => { console.error(`Failed to load ${darkImgSrc}`); setImgLoaded(true); e.currentTarget.style.display = 'none'; }} // Hide on error
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
         {isSelected && (
-          <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
-            <div className="bg-primary text-primary-foreground p-2 rounded-full">
-              <Check className="h-6 w-6" />
-            </div>
+          <div className="absolute inset-0 bg-primary/80 flex items-center justify-center">
+            <Check className="h-8 w-8 text-primary-foreground" />
           </div>
         )}
       </div>
-      <CardHeader className="p-4">
-        <CardTitle className="text-lg flex items-center justify-between">
-          {theme.name}
-          {isSelected && <Palette className="h-4 w-4 text-primary" />}
-        </CardTitle>
+      <CardHeader>
+        <CardTitle>{theme.name}</CardTitle>
         <CardDescription>{theme.description}</CardDescription>
       </CardHeader>
     </Card>

@@ -172,3 +172,120 @@
   background-color: var(--dark-overlay);
   opacity: var(--dark-overlay-opacity);
 }
+
+/**
+ * Custom Animations
+ */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) skewX(-12deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-12deg);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 var(--primary);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 20px 5px var(--primary);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes type-cursor {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Animation utilities */
+.animate-shimmer {
+  animation: shimmer 3s infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s infinite;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-type-cursor {
+  animation: type-cursor 0.8s infinite;
+}
+
+/* Scroll Animation utilities */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* For continuous observation (bi-directional animations) */
+[data-observe-continuous] {
+  transition-duration: 0.8s;
+}
+
+[data-observe-continuous].reveal-on-scroll:not(.is-visible) {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+/* Hover effect utilities */
+.hover-lift {
+  transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+  will-change: transform, box-shadow;
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15);
+}
+
+/* Color glow utilities */
+.glow-on-hover {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.glow-on-hover::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, var(--primary) 0%, transparent 80%);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.5s ease-out;
+  will-change: opacity;
+}
+
+.glow-on-hover:hover::after {
+  opacity: 0.3;
+}

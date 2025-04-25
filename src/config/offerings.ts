@@ -7,6 +7,7 @@ export interface Offering {
   description: string;
   type: ProductType;
   price: number | null; // null for custom quotes
+  originalPrice?: number | null; // Optional: For displaying discounted prices
   priceUnit?: string; // e.g., 'hour', 'project', empty for flat price
   image: string;
   features: string[];
@@ -17,21 +18,131 @@ export interface Offering {
 
 export const products: Offering[] = [
   {
-    id: 'basic-website-template',
-    title: 'Basic Website Template',
-    description: 'A clean, responsive website template for small businesses and personal use.',
+    id: 'nodus-template-basic',
+    title: 'Nodus Centralized Payment Hub',
+    description: 'Basic Template: Core source code, setup guide, 30 day email support',
     type: 'digital',
-    price: 99,
-    image: '/images/products/website-template.jpg',
+    price: 3900,
+    image: '/images/products/nodus-template.jpg',
     features: [
+      'Core source code',
+      'Detailed setup guide',
+      '30 day email support',
+      'Stripe & Coinbase ready',
+      'Theme customization panel',
       'Responsive design',
-      '5 page templates',
-      'Contact form',
-      'SEO optimized',
-      '1 month support',
     ],
     paymentMethods: ['stripe', 'crypto'],
     customizable: false,
+    popular: true,
+  },
+  {
+    id: 'nodus-template-pro',
+    title: 'Nodus Centralized Payment Hub - Pro',
+    description: 'Pro: Basic features + Advanced animations, extra styling, pre-wired product slots, deployment assistance',
+    type: 'digital',
+    price: 9900,
+    image: '/images/products/nodus-template-pro.jpg',
+    features: [
+      'All Basic features',
+      'Advanced animation library',
+      'Premium styling options',
+      'Pre-wired product examples',
+      'Deployment assistance (1 hour)',
+      'Priority email support',
+    ],
+    paymentMethods: ['stripe', 'crypto'],
+    customizable: false,
+    popular: false,
+  },
+  {
+    id: 'nodus-template-extended',
+    title: 'Nodus Hub - Extended License',
+    description: 'Extended/Dev: Pro features + Commercial/Client use license, 30 day support.',
+    type: 'digital',
+    price: 12900,
+    originalPrice: 14900,
+    image: '/images/products/nodus-template-extended.jpg',
+    features: [
+      'All Pro features',
+      'Commercial use license',
+      'Unlimited projects/clients',
+      'Full source code access',
+      '30 day standard support',
+      'Use for client work permission',
+    ],
+    paymentMethods: ['stripe', 'crypto', 'invoice'],
+    customizable: false, 
+    popular: false,
+  },
+  {
+    id: 'quicktoken-dashboard',
+    title: 'QuickToken Dashboard',
+    description: 'Complete Platform Codebase for ERC-20 Token Management.',
+    type: 'digital',
+    price: 4900,
+    image: '/images/products/quicktoken.jpg',
+    features: [
+      'Complete Source Code Access',
+      'Admin Dashboard & Config Panel',
+      'ERC-20 Smart Contracts Included',
+      'Standard License (1 Project)'
+    ],
+    paymentMethods: ['stripe', 'crypto'],
+    customizable: false,
+    popular: false,
+  },
+  {
+    id: 'quicktoken-dashboard-extended',
+    title: 'QuickToken Dashboard - Extended License',
+    description: 'Complete Platform Codebase + Extended Commercial Use License.',
+    type: 'digital',
+    price: 20000,
+    image: '/images/products/quicktoken-extended.jpg',
+    features: [
+      'Complete Source Code Access',
+      'Admin Dashboard & Config Panel',
+      'ERC-20 Smart Contracts Included',
+      'Extended Commercial Use License'
+    ],
+    paymentMethods: ['stripe', 'crypto', 'invoice'],
+    customizable: false, 
+    popular: false,
+  },
+  {
+    id: 'tauri-boilerplate-basic',
+    title: 'Tauri Security Boilerplate - Basic',
+    description: 'A production-ready template for secure, cross-platform desktop apps with Tauri 2.0, React, TypeScript, & Tailwind.',
+    type: 'digital',
+    price: 3900,
+    image: '/images/products/tauri-boilerplate.jpg',
+    features: [
+      'Tauri 2.0 Foundation',
+      'React + TypeScript + Tailwind',
+      'Basic License (Non-Commercial)',
+      '30 Day Email Support',
+    ],
+    paymentMethods: ['stripe', 'crypto'],
+    customizable: false, 
+    popular: false,
+  },
+  {
+    id: 'tauri-boilerplate-commercial',
+    title: 'Tauri Security Boilerplate - Commercial',
+    description: 'A production-ready template for secure, commercial-grade cross-platform desktop apps with Tauri 2.0, React, TypeScript, & Tailwind.',
+    type: 'digital',
+    price: 11900,
+    originalPrice: 14900,
+    image: '/images/products/tauri-boilerplate-commercial.jpg',
+    features: [
+      'Tauri 2.0 Foundation',
+      'React + TypeScript + Tailwind',
+      'Commercial Use License',
+      'Unlimited Projects',
+      '30 Day Email Support',
+    ],
+    paymentMethods: ['stripe', 'crypto', 'invoice'],
+    customizable: false, 
     popular: true,
   },
   {
@@ -39,7 +150,7 @@ export const products: Offering[] = [
     title: 'E-commerce Template',
     description: 'Complete e-commerce solution with product listings, cart, and checkout.',
     type: 'digital',
-    price: 249,
+    price: 24900,
     image: '/images/products/ecommerce-template.jpg',
     features: [
       'Product catalog',
@@ -56,11 +167,29 @@ export const products: Offering[] = [
 
 export const services: Offering[] = [
   {
+    id: 'starter-website',
+    title: 'Starter Website',
+    description: '1-pager (Home, About, Contact), responsive, CSS animations. Great for portfolios, link trees, and landing pages.',
+    type: 'service',
+    price: 40000,
+    image: '/images/services/starter-website.jpg',
+    features: [
+      '1-Pager (Home, About, Contact)',
+      'Responsive Design',
+      'CSS Animations',
+      'Ideal for Portfolios/Landing Pages',
+      '30 Day Support',
+    ],
+    paymentMethods: ['stripe', 'invoice'],
+    customizable: false,
+    popular: true,
+  },
+  {
     id: 'web-development-starter',
     title: 'Web Development Starter Package',
     description: 'A fixed-price package for a professional, custom 5-page business website.',
     type: 'service',
-    price: 250000, // Example: $2500.00 in cents
+    price: 250000,
     image: '/images/services/web-development.jpg',
     features: [
       'Custom 5-page design',
@@ -78,7 +207,7 @@ export const services: Offering[] = [
     title: 'UI/UX Audit & Recommendations',
     description: 'A comprehensive review of your existing website or app with actionable insights.',
     type: 'consultation',
-    price: 75000, // Example: $750.00 in cents
+    price: 75000,
     image: '/images/services/design-consultation.jpg',
     features: [
       'Full UX review (up to 10 screens)',
@@ -92,11 +221,48 @@ export const services: Offering[] = [
     customizable: true,
   },
   {
+    id: 'quicktoken-custom-site',
+    title: 'QuickToken - Custom Site & DApp',
+    description: 'A fully branded website with integrated QuickToken admin dashboard and DApp. Starting at $500.',
+    type: 'service',
+    price: null,
+    image: '/images/services/quicktoken-custom.jpg',
+    features: [
+      'Full Custom Branded Website',
+      'Integrated QuickToken Dashboard',
+      'Custom DApp Integration',
+      'Single Use License Included',
+      '60 Day Post-Launch Support',
+      '**Request quote for extended license, support, or customization**',
+    ],
+    paymentMethods: ['invoice', 'stripe'],
+    customizable: true,
+    popular: false,
+  },
+  {
+    id: 'custom-support-management',
+    title: 'Custom Support & Management Plan',
+    description: 'Request a tailored quote for ongoing maintenance, updates, web/app management, and priority support. Flexible subscription plans available.',
+    type: 'service',
+    price: null,
+    image: '/images/services/support-management.jpg',
+    features: [
+      'Ongoing Maintenance & Updates',
+      'Web/App Management Services',
+      'Security & Performance Monitoring',
+      'Priority Support Options',
+      'Flexible Subscription Tiers (Monthly, Quarterly, Annual)',
+    ],
+    paymentMethods: ['invoice', 'stripe'],
+    customizable: true,
+    popular: false,
+  },
+  {
     id: 'custom-project',
     title: 'Custom Project Quote Request',
     description: 'Need something unique? Request a detailed quote for your specific project.',
     type: 'service',
-    price: null, // Price remains null for quote requests
+    price: null,
     image: '/images/services/custom-project.jpg',
     features: [
       'Requirements analysis',

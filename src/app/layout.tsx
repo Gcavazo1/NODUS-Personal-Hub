@@ -16,6 +16,7 @@ import { isCoinbaseConfigured } from "@/lib/coinbase";
 import { Toaster } from "sonner";
 import { ThemeColorApplier } from "@/components/ThemeColorApplier";
 import { AppLoadingScreen } from "@/components/AppLoadingScreen";
+import { ScrollObserver } from "@/components/animations";
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
@@ -81,6 +82,7 @@ export default function RootLayout({
               <PaymentConfigProvider config={paymentConfig}>
                 <ThemeColorApplier />
                 <AppLoadingScreen />
+                <ScrollObserver />
                 <BackgroundImage 
                     darkImageUrl="/images/centralized-dark-background.jpg"
                     lightImageUrl="/images/centralized-light-background.jpg"
