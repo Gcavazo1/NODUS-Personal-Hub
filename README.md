@@ -32,7 +32,7 @@
 
 | Layer         | Tool/Service         | Purpose                          |
 | ------------- | -------------------- | -------------------------------- |
-| Frontend      | Next.js (App Router) | Modern, scalable React framework | 
+| Frontend      | Next.js (App Router) | Modern, scalable React framework |
 | UI            | Tailwind CSS         | Utility-first CSS styling        |
 | Components    | shadcn/ui            | Reusable UI components           |
 | Hosting       | Vercel (Recommended) | CI/CD, Preview Deployments       |
@@ -47,37 +47,37 @@
 
 ## 🚀 Getting Started (Local Development)
 
-1.  **Clone:**
+1. **Clone:**
 
-    ```bash
-    # Replace with your actual repository URL
-    git clone https://github.com/your-github-username/your-repo-name.git 
-    cd your-repo-name 
-    ```
-2.  **Install Dependencies:**
+   ```bash
+   # Replace with your actual repository URL
+   git clone https://github.com/your-github-username/your-repo-name.git 
+   cd your-repo-name 
+   ```
+2. **Install Dependencies:**
 
-    ```bash
-    npm install
-    # or yarn / pnpm
-    ```
-3.  **Environment Variables:**
+   ```bash
+   npm install
+   # or yarn / pnpm
+   ```
+3. **Environment Variables:**
 
-    - Copy `.env.example` to `.env.local`.
-    - Fill in your required keys for Firebase, Stripe, and optionally Coinbase/Resend.
+   - Copy `.env.example` to `.env.local`.
+   - Fill in your required keys for Firebase, Stripe, and optionally Coinbase/Resend.
 
-    ```bash
-    cp .env.example .env.local
-    # Now edit .env.local with your keys
-    ```
+   ```bash
+   cp .env.example .env.local
+   # Now edit .env.local with your keys
+   ```
 
-    *(**Note:** `NEXT_PUBLIC_` variables are exposed client-side. Keep secret keys without the prefix.)*
-4.  **Run Development Server:**
+   *(**Note:** `NEXT_PUBLIC_` variables are exposed client-side. Keep secret keys without the prefix.)*
+4. **Run Development Server:**
 
-    ```bash
-    npm run dev
-    ```
+   ```bash
+   npm run dev
+   ```
 
-    Open [http://localhost:3000](http://localhost:3000) (or the specified port).
+   Open [http://localhost:3000](http://localhost:3000) (or the specified port).
 
 ---
 
@@ -135,7 +135,7 @@ This build utilizes the Next.js App Router structure:
 
 ## 💡 Future Enhancements
 
-- [ ] Implement a customer support chat terminal.
+- [ ] Implement a customer support chat terminal. In process
 - [ ] *(Add other ideas specific to your build here)*
 
 ---
