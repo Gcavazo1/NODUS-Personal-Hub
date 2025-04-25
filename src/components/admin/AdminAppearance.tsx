@@ -438,9 +438,9 @@ interface ThemeCardProps {
 
 const ThemeCard = ({ theme, isSelected, onSelect }: ThemeCardProps) => {
   const [imgLoaded, setImgLoaded] = useState(false);
-  // Construct image path based on theme id
-  const lightImgSrc = `/images/themes/${theme.id}-light.png`;
-  const darkImgSrc = `/images/themes/${theme.id}-dark.png`;
+  // Construct image path based on theme id using background images
+  const lightImgSrc = `/images/${theme.id}-light-background.jpg`; // Corrected path
+  const darkImgSrc = `/images/${theme.id}-dark-background.jpg`; // Corrected path
 
   return (
     <Card 
